@@ -12,11 +12,11 @@ DESTINATION_FOLDER=$1
 # Create the destination folder if it doesn't exist
 mkdir -p "$DESTINATION_FOLDER"
 
-# URL to download the file
-FILE_URL="https://download.cncb.ac.cn/scmethmap/singlebed/oocyte_Human.tar.gz"
+# Download methylation data
+wget -P "$DESTINATION_FOLDER" "https://download.cncb.ac.cn/scmethmap/singlebed/oocyte_Human.tar.gz"
 
-# Download the file using wget into the specified folder
-wget -P "$DESTINATION_FOLDER" "$FILE_URL"
+# Download reference genome data
+wget -P "$DESTINATION_FOLDER" "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz"
 
 # Get the absolute path of the current bash script
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
