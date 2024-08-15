@@ -43,11 +43,14 @@ def preprocess(file_path, data_dir):
 
         # Save the sparse tensor to disk
         basename = os.path.basename(file_path).split('.')[0]
-        #os.makedirs(os.path.join(data_dir, chromosome), exist_ok = True) 
-        os.makedirs(os.path.join(data_dir, chromosome, "pos_strand"), exist_ok = True) 
-        torch.save(pos_sparse, f'data/{chromosome}/pos_strand/{basename}.pth')
-        os.makedirs(os.path.join(data_dir, chromosome, "neg_strand"), exist_ok = True) 
-        torch.save(neg_sparse, f'data/{chromosome}/neg_strand/{basename}.pth')
+        
+        path = os.path.join(data_dir, chromosome, "pos_strand")
+        os.makedirs(path, exist_ok = True) 
+        torch.save(pos_sparse, os.path.join(path, f'{basename}.pth'))
+        
+        path = os.path.join(data_dir, chromosome, "neg_strand")
+        os.makedirs(path, exist_ok = True) 
+        torch.save(neg_sparse, os.path.join(path, f'{basename}.pth'))
     
 def extract_tar_gz(file_path, extract_dir):
     # Extract a tar.gz file
@@ -76,7 +79,6 @@ def recursive_extract(directory):
                 extract_gz(file_path, root)
                 print(f"Extracted {file_path} in {root}, opening...")
                 preprocess(file_path, "./data")
-                quit()
 
 if __name__ == "__main__":
     import argparse
