@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <destination_folder>"
+  exit 1
+fi
+
+# Get the destination folder from the command-line argument
+DESTINATION_FOLDER=$1
+
+# Create the destination folder if it doesn't exist
+mkdir -p "$DESTINATION_FOLDER"
+
+# URL to download the file
+FILE_URL="https://download.cncb.ac.cn/scmethmap/singlebed/oocyte_Human.tar.gz"
+
+# Download the file using wget into the specified folder
+wget -P "$DESTINATION_FOLDER" "$FILE_URL"
+
+# Get the absolute path of the current bash script
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
+# Run the Python script with the downloaded file and the destination folder
+python "$SCRIPT_DIR/preprocess_data.py" "$DESTINATION_FOLDER/oocyte_Human.tar.gz" "$DESTINATION_FOLDER"
